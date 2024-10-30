@@ -1,14 +1,31 @@
+// database/factories/CategoryFactory.php
 <?php
 
-namespace Database\Seeders;
+namespace Database\Factories;
 
-use Illuminate\Database\Seeder;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CategorySeeder extends Seeder
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ */
+class CategoryFactory extends Factory
 {
-    public function run(): void
+    protected $model = Category::class;
+
+    public function definition(): array
     {
-        \App\Models\Category::factory()->count(10)->create();
-        \App\Models\Category::factory()->count(5)->active()->create();
+        return [
+            'name' => $this->faker->word,
+        ];
+    }
+
+    public function active(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_active' => true,
+            ];
+        });
     }
 }
